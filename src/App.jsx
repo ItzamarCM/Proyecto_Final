@@ -5,7 +5,7 @@ import axios from 'axios';
 import Character from './Character';
 import './App.css';
 
-function App() {
+function App() { //useState : permite añadir el estado de React a un componente de función
   const [characters, setCharacters] = useState([]);
 
   const [originalCharacters, setOriginalCharacters] = useState([]); //Estado original
@@ -19,7 +19,7 @@ function App() {
   //A-Z
   const [isSortedAZ, setIsSortedAZ] = useState(false);
 
-
+// use Effect : indicando a React que el componente tiene que hacer algo después de renderizarse.
   useEffect(() => { //Conexión con la API
     axios.get('https://hp-api.onrender.com/api/characters')
       .then(response => {
@@ -71,7 +71,7 @@ const handleSortAZ = () => {
   setIsSortedAZ(!isSortedAZ);
 };
 
-const resetFiltersAndSort = () => {
+const resetFiltersAndSort = () => { //tssss
   setCharacters(originalCharacters);
   setSearchTerm('');
   setSelectedHouse('');
