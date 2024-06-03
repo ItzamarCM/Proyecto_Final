@@ -4,8 +4,10 @@
   background-color: #1c1c1c; /* Fondo oscuro */
   color: #f5f5f5; /* Texto claro */
   padding: 20px;
+  position: relative; /*para posicionar el botón de cargar más */
 }
 
+/*-------------------------------------*/
 /* Botón busqueda */
 .search-container {
   display: flex;
@@ -51,6 +53,10 @@
 .filter-menu button:hover {
   background-color: #555;
 }
+
+.load-more-button:hover {
+  background-color: #777;
+}
 /*-------------------------------------*/
 input[type="text"] {
   margin: 20px;
@@ -81,3 +87,4 @@ input[type="text"] {
   max-width: 100%;
   border-radius: 50%;
 }
+

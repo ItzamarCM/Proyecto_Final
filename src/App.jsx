@@ -2,14 +2,14 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Character from './Character';
+import Character from './components/Character';
 import './App.css';
+import Banner from './components/Banner';
+import Footer from './components/Footer';
 
 function App() { //useState : permite añadir el estado de React a un componente de función
   const [characters, setCharacters] = useState([]);
-
   const [originalCharacters, setOriginalCharacters] = useState([]); //Estado original
-
   const [searchTerm, setSearchTerm] = useState(''); // Estado para el término de búsqueda
 
   //busqueda por casas
@@ -71,7 +71,7 @@ const handleSortAZ = () => {
   setIsSortedAZ(!isSortedAZ);
 };
 
-const resetFiltersAndSort = () => { //tssss
+const resetFiltersAndSort = () => {
   setCharacters(originalCharacters);
   setSearchTerm('');
   setSelectedHouse('');
@@ -81,7 +81,8 @@ const resetFiltersAndSort = () => { //tssss
 
   return ( //Mandar a llamar los personajes dentro de la interfaz
     <div className="App">
-      <h1>Harry Potter</h1>
+          <Banner />
+
       <h2>Personajes</h2>
 
       <div className="search-container">
@@ -115,6 +116,7 @@ const resetFiltersAndSort = () => { //tssss
           <Character key={`${character.name}-${index}`} character={character} />
         ))}
       </div>
+      <Footer />
     </div>
   );
 }
