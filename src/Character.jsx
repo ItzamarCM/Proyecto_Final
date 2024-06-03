@@ -4,7 +4,7 @@ import React from 'react';
 import './Character.css';
 
 function Character({ character }) {
-  
+
 // acá se especifica que datos se van a mostrar y en que orden
 
   return (

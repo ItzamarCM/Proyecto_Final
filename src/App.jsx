@@ -84,9 +84,9 @@ const resetFiltersAndSort = () => { //tssss
       <h1>Harry Potter</h1>
       <h2>Personajes</h2>
 
-      <div className="search-container"> {/*Botón filtrado casas */}
+      <div className="search-container">
         <button className="filter-button" onClick={() => setShowFilterMenu(!showFilterMenu)}>
-          Casas
+          Filtros
         </button>
         {showFilterMenu && (
           <div className="filter-menu">
@@ -94,7 +94,7 @@ const resetFiltersAndSort = () => { //tssss
             <button onClick={() => handleFilterByHouse('Slytherin')}>Slytherin</button>
             <button onClick={() => handleFilterByHouse('Hufflepuff')}>Hufflepuff</button>
             <button onClick={() => handleFilterByHouse('Ravenclaw')}>Ravenclaw</button>
-            <button onClick={() => handleFilterByHouse('')}>Mostrar todos</button>
+            <button onClick={() => resetFiltersAndSort()}>Mostrar todos</button>
           </div>
         )}
         <input 
@@ -108,8 +108,11 @@ const resetFiltersAndSort = () => { //tssss
         </button>
       </div>
       <div className="characters">
-        {characters.map(character => (
-          <Character key={character.name} character={character} />
+        {/*combinación del nombre del personaje y el índice del personaje en la lista (index) 
+          como clave para cada elemento en el componente Character.
+          asegurando que cada clave sea única, incluso si varios personajes tienen el mismo nombre*/}
+        {characters.map((character, index) => (
+          <Character key={`${character.name}-${index}`} character={character} />
         ))}
       </div>
     </div>
