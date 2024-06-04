@@ -54,9 +54,6 @@
   background-color: #555;
 }
 
-.load-more-button:hover {
-  background-color: #777;
-}
 /*-------------------------------------*/
 input[type="text"] {
   margin: 20px;
@@ -87,4 +84,3 @@ input[type="text"] {
   max-width: 100%;
   border-radius: 50%;
 }
-

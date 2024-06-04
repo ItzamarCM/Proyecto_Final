@@ -6,20 +6,29 @@ import Character from './components/Character';
 import './App.css';
 import Banner from './components/Banner';
 import Footer from './components/Footer';
+import CardCarousel from './components/Carousel'; // Importa el componente Carousel
+import Pagination from './components/Pagination'; // Importa el componente Pagination
 
+//TODO ------------------------------------------------------------------------------------------
 function App() { //useState : permite añadir el estado de React a un componente de función
   const [characters, setCharacters] = useState([]);
   const [originalCharacters, setOriginalCharacters] = useState([]); //Estado original
   const [searchTerm, setSearchTerm] = useState(''); // Estado para el término de búsqueda
 
-  //busqueda por casas
+  //busqueda por casas --------------
   const [selectedHouse, setSelectedHouse] = useState('');
   const [showFilterMenu, setShowFilterMenu] = useState(false);
 
-  //A-Z
+  //A-Z -------------
   const [isSortedAZ, setIsSortedAZ] = useState(false);
 
-// use Effect : indicando a React que el componente tiene que hacer algo después de renderizarse.
+  //Paginación
+  const [currentPage, setCurrentPage] = useState(1); // Página actual
+  const itemsPerPage = 30; // Elementos por página
+
+//TODO ------------------------------------------------------------------------------------------
+//use Effect : indicando a React que el componente tiene que hacer algo después de renderizarse.
+
   useEffect(() => { //Conexión con la API
     axios.get('https://hp-api.onrender.com/api/characters')
       .then(response => {
@@ -32,9 +41,8 @@ function App() { //useState : permite añadir el estado de React a un componente
   }, []);
 
 
-
+//TODO ------------------------------------------------------------------------------------------
 // Filtrar los personajes según el término de búsqueda --------------------------------
-
 const handleSearch = (e) => {
   const value = e.target.value.toLowerCase();
   setSearchTerm(value);
@@ -59,6 +67,7 @@ const filterCharacters = (searchTerm, house) => {
   }
 
   setCharacters(filtered);
+  setCurrentPage(1); // Reiniciar a la primera página cuando se filtra
 };
 
 const handleSortAZ = () => {
@@ -76,16 +85,23 @@ const resetFiltersAndSort = () => {
   setSearchTerm('');
   setSelectedHouse('');
   setIsSortedAZ(false);
+  setCurrentPage(1); // Va a la primera página cuando se reinicia
 };
-//--------------------------------------------------------------------------------------
+
+//TODO ------------------------------------------------------------------------------------------
+
+// Calcular los personajes a mostrar en la página actual
+const indexOfLastCharacter = currentPage * itemsPerPage;
+const indexOfFirstCharacter = indexOfLastCharacter - itemsPerPage;
+const currentCharacters = characters.slice(indexOfFirstCharacter, indexOfLastCharacter);
+
+//TODO ------------------------------------------------------------------------------------------
 
   return ( //Mandar a llamar los personajes dentro de la interfaz
     <div className="App">
           <Banner />
 
-      <h2>Personajes</h2>
-
-      <div className="search-container">
+      <div className="search-container"> {/* Contenedor de botones y busqueda */}
         <button className="filter-button" onClick={() => setShowFilterMenu(!showFilterMenu)}>
           Filtros
         </button>
@@ -105,17 +121,30 @@ const resetFiltersAndSort = () => {
           onChange={handleSearch}
         />
         <button className="sort-button" onClick={handleSortAZ}>
-          {isSortedAZ ? 'Volver al orden original' : 'Ordenar A-Z'}
+          {isSortedAZ ? 'Orden original' : 'Ordenar A-Z'}
         </button>
       </div>
+
+        {/* Agrega el componente CardCarousel */}
+      {/* Agrega el componente CardCarousel con la lista original de personajes */}
+      <CardCarousel cards={originalCharacters} />
+
       <div className="characters">
         {/*combinación del nombre del personaje y el índice del personaje en la lista (index) 
           como clave para cada elemento en el componente Character.
           asegurando que cada clave sea única, incluso si varios personajes tienen el mismo nombre*/}
-        {characters.map((character, index) => (
+        {currentCharacters.map((character, index) => (
           <Character key={`${character.name}-${index}`} character={character} />
         ))}
       </div>
+
+      <Pagination
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+        totalItems={characters.length}
+        onPageChange={setCurrentPage}
+      />
+
       <Footer />
     </div>
   );
