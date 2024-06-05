@@ -101,19 +101,19 @@ const currentCharacters = characters.slice(indexOfFirstCharacter, indexOfLastCha
     <div className="App">
           <Banner />
 
-      <div className="search-container"> {/* Contenedor de botones y busqueda */}
-        <button className="filter-button" onClick={() => setShowFilterMenu(!showFilterMenu)}>
-          Filtros
-        </button>
-        {showFilterMenu && (
-          <div className="filter-menu">
-            <button onClick={() => handleFilterByHouse('Gryffindor')}>Gryffindor</button>
-            <button onClick={() => handleFilterByHouse('Slytherin')}>Slytherin</button>
-            <button onClick={() => handleFilterByHouse('Hufflepuff')}>Hufflepuff</button>
-            <button onClick={() => handleFilterByHouse('Ravenclaw')}>Ravenclaw</button>
-            <button onClick={() => resetFiltersAndSort()}>Mostrar todos</button>
+          <div className="search-container">
+        <div className="dropdown">
+          <button className="btn btn-secondary dropdown-toggle" type="button" id="filterMenuButton" aria-haspopup="true" aria-expanded="false" onClick={() => setShowFilterMenu(!showFilterMenu)}>
+            Filtros
+          </button>
+          <div className={`dropdown-menu ${showFilterMenu ? 'show' : ''}`} aria-labelledby="filterMenuButton">
+            <button className="dropdown-item gryffindor-item" onClick={() => handleFilterByHouse('Gryffindor')}>Gryffindor</button>
+            <button className="dropdown-item slytherin-item" onClick={() => handleFilterByHouse('Slytherin')}>Slytherin</button>
+            <button className="dropdown-item hufflepuff-item" onClick={() => handleFilterByHouse('Hufflepuff')}>Hufflepuff</button>
+            <button className="dropdown-item ravenclaw-item" onClick={() => handleFilterByHouse('Ravenclaw')}>Ravenclaw</button>
+            <button className="dropdown-item reset-item" onClick={() => resetFiltersAndSort()}>Mostrar todos</button>
           </div>
-        )}
+        </div>
         <input 
           type="text" 
           placeholder="Buscar personaje..." 
