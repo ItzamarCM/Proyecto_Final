@@ -7,8 +7,22 @@
   position: relative; /*para posicionar el botón de cargar más */
 }
 
-/*-------------------------------------*/
-/* Botón busqueda */
+/*----FUENTE-------------------------------------------------*/
+
+@font-face {
+  font-family: 'HarryPotter';
+  src: url('./fonts/HARRYP__.ttf') format('truetype');
+}
+
+.title {
+  font-family: 'HarryPotter', sans-serif;
+  font-size: 48px; /* Ajuste de tamaño */
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #FFD700; 
+}
+/*----BOTONES--------------------------*/
 .search-container {
   display: flex;
   justify-content: center;
@@ -63,7 +77,7 @@
   max-width: 300px;
 }
 
-/* Hover CASAS ------------------*/
+/*--------- Hover CASAS ------------------*/
 .gryffindor-item:hover {
   background-color: #ae0001;
   color: white;
@@ -90,8 +104,8 @@
 }
 
 
-/*-------------------------------------*/
-input[type="text"] { /*buscador*/
+/*----BUSCADOR----------------------*/
+input[type="text"] {
   margin: 20px;
   padding: 10px;
   width: 80%;
@@ -100,6 +114,7 @@ input[type="text"] { /*buscador*/
   border-radius: 4px;
 }
 
+/*----PERSONAJES----------------------------------*/
 .characters {
   display: flex;
   flex-wrap: wrap;

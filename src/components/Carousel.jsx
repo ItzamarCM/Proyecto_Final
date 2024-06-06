@@ -1,5 +1,6 @@
 import React from 'react';
-import { Carousel } from 'react-bootstrap';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 import './css/Carousel.css';
 
 // Importa las imágenes
@@ -21,17 +22,42 @@ import P8 from '../images/P8.jpg';
 
 const images = [L1, P1, L2, P2, L3, P3, L4, P4, L5, P5, L6, P6, L7, P7, P8];
 
+const responsive = {
+  superLargeDesktop: {
+    breakpoint: { max: 4000, min: 3000 },
+    items: 5,
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 5,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2,
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+  },
+};
+
 const CardCarousel = () => {
   return (
-    <Carousel interval={3000} indicators={false}>
+    <Carousel 
+      responsive={responsive} 
+      infinite={true} 
+      autoPlay={true} 
+      autoPlaySpeed={3000} 
+      arrows={true}
+    >
       {images.map((image, index) => (
-        <Carousel.Item key={index}>
+        <div key={index} className="image-container">
           <img
-            className="d-block w-100 carousel-img"
+            className="carousel-img"
             src={image}
             alt={`Slide ${index}`}
           />
-        </Carousel.Item>
+        </div>
       ))}
     </Carousel>
   );

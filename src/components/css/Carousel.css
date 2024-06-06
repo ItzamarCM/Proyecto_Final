@@ -1,10 +1,22 @@
-.carousel {
-  max-width: 800px;
-  margin: 0 auto;
-  margin-bottom: 20px;
+.image-container {
+  padding: 10px;
 }
 
 .carousel-img {
-  height: 300px;
+  height: 420px;
   object-fit: cover;
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.carousel .react-multi-carousel-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.carousel .react-multi-carousel-list {
+  overflow: hidden;
 }

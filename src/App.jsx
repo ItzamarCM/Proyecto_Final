@@ -13,17 +13,17 @@ import Pagination from './components/Pagination'; // Importa el componente Pagin
 function App() { //useState : permite añadir el estado de React a un componente de función
   const [characters, setCharacters] = useState([]);
   const [originalCharacters, setOriginalCharacters] = useState([]); //Estado original
-  const [searchTerm, setSearchTerm] = useState(''); // Estado para el término de búsqueda
-
+  const [searchTerm, setSearchTerm] = useState(localStorage.getItem('searchTerm') || ''); // Estado para el término de búsqueda
+ 
   //busqueda por casas --------------
-  const [selectedHouse, setSelectedHouse] = useState('');
+  const [selectedHouse, setSelectedHouse] = useState(localStorage.getItem('selectedHouse') || ''); // Búsqueda por casas
   const [showFilterMenu, setShowFilterMenu] = useState(false);
 
   //A-Z -------------
-  const [isSortedAZ, setIsSortedAZ] = useState(false);
-
+  const [isSortedAZ, setIsSortedAZ] = useState(JSON.parse(localStorage.getItem('isSortedAZ')) || false); // Orden A-Z
+  
   //Paginación
-  const [currentPage, setCurrentPage] = useState(1); // Página actual
+  const [currentPage, setCurrentPage] = useState(JSON.parse(localStorage.getItem('currentPage')) || 1); // Página actual
   const itemsPerPage = 30; // Elementos por página
 
 //TODO ------------------------------------------------------------------------------------------
@@ -41,6 +41,13 @@ function App() { //useState : permite añadir el estado de React a un componente
   }, []);
 
 
+  useEffect(() => {
+    // Guardar el estado en localStorage cuando cambie
+    localStorage.setItem('searchTerm', searchTerm);
+    localStorage.setItem('selectedHouse', selectedHouse);
+    localStorage.setItem('isSortedAZ', JSON.stringify(isSortedAZ));
+    localStorage.setItem('currentPage', JSON.stringify(currentPage));
+  }, [searchTerm, selectedHouse, isSortedAZ, currentPage]);
 //TODO ------------------------------------------------------------------------------------------
 // Filtrar los personajes según el término de búsqueda --------------------------------
 const handleSearch = (e) => {
@@ -101,7 +108,13 @@ const currentCharacters = characters.slice(indexOfFirstCharacter, indexOfLastCha
     <div className="App">
           <Banner />
 
-          <div className="search-container">
+        {/* Agrega el componente CardCarousel */}
+      <CardCarousel />
+
+      <h1 className="title">PERSONAJES</h1> {/* Texto añadido con estilo de Harry Potter */}
+
+ {/*-------------------------------------------*/}
+      <div className="search-container">
         <div className="dropdown">
           <button className="btn btn-secondary dropdown-toggle" type="button" id="filterMenuButton" aria-haspopup="true" aria-expanded="false" onClick={() => setShowFilterMenu(!showFilterMenu)}>
             Filtros
@@ -124,10 +137,7 @@ const currentCharacters = characters.slice(indexOfFirstCharacter, indexOfLastCha
           {isSortedAZ ? 'Orden original' : 'Ordenar A-Z'}
         </button>
       </div>
-
-        {/* Agrega el componente CardCarousel */}
-      {/* Agrega el componente CardCarousel con la lista original de personajes */}
-      <CardCarousel cards={originalCharacters} />
+ {/*--------------------------------------*/}
 
       <div className="characters">
         {/*combinación del nombre del personaje y el índice del personaje en la lista (index) 
