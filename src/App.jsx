@@ -8,6 +8,7 @@ import Banner from './components/Banner';
 import Footer from './components/Footer';
 import CardCarousel from './components/Carousel'; // Importa el componente Carousel
 import Pagination from './components/Pagination'; // Importa el componente Pagination
+import Swal from 'sweetalert2'; // Importa SweetAlert2
 
 //TODO ------------------------------------------------------------------------------------------
 function App() { //useState : permite añadir el estado de React a un componente de función
@@ -26,6 +27,10 @@ function App() { //useState : permite añadir el estado de React a un componente
   const [currentPage, setCurrentPage] = useState(JSON.parse(localStorage.getItem('currentPage')) || 1); // Página actual
   const itemsPerPage = 30; // Elementos por página
 
+  //SweetAlert
+  const [loading, setLoading] = useState(true); // Estado de carga
+  const [error, setError] = useState(null); // Estado de error
+
 //TODO ------------------------------------------------------------------------------------------
 //use Effect : indicando a React que el componente tiene que hacer algo después de renderizarse.
 
@@ -34,12 +39,19 @@ function App() { //useState : permite añadir el estado de React a un componente
       .then(response => {
         setCharacters(response.data);
         setOriginalCharacters(response.data); // Guardar el orden original
+        setLoading(false); // Finalizar la carga
       })
       .catch(error => {
         console.error('Error fetching data:', error);
+        setError('');
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Error al cargar los personajes. Por favor intenta más tarde.',
+        });
+        setLoading(false); // Finalizar la carga
       });
   }, []);
-
 
   useEffect(() => {
     // Guardar el estado en localStorage cuando cambie
@@ -48,6 +60,7 @@ function App() { //useState : permite añadir el estado de React a un componente
     localStorage.setItem('isSortedAZ', JSON.stringify(isSortedAZ));
     localStorage.setItem('currentPage', JSON.stringify(currentPage));
   }, [searchTerm, selectedHouse, isSortedAZ, currentPage]);
+
 //TODO ------------------------------------------------------------------------------------------
 // Filtrar los personajes según el término de búsqueda --------------------------------
 const handleSearch = (e) => {
@@ -102,18 +115,25 @@ const indexOfLastCharacter = currentPage * itemsPerPage;
 const indexOfFirstCharacter = indexOfLastCharacter - itemsPerPage;
 const currentCharacters = characters.slice(indexOfFirstCharacter, indexOfLastCharacter);
 
+  if (loading) {
+    return <div className="loading"><strong>Cargando...</strong></div>;
+  }
+
+  if (error) {
+    return <div className="error">{error}</div>;
+  }
 //TODO ------------------------------------------------------------------------------------------
 
   return ( //Mandar a llamar los personajes dentro de la interfaz
     <div className="App">
-          <Banner />
+      <Banner />
 
-        {/* Agrega el componente CardCarousel */}
+      {/* Agrega el componente CardCarousel */}
       <CardCarousel />
 
       <h1 className="title">PERSONAJES</h1> {/* Texto añadido con estilo de Harry Potter */}
 
- {/*-------------------------------------------*/}
+      {/*-------------------------------------------*/}
       <div className="search-container">
         <div className="dropdown">
           <button className="btn btn-secondary dropdown-toggle" type="button" id="filterMenuButton" aria-haspopup="true" aria-expanded="false" onClick={() => setShowFilterMenu(!showFilterMenu)}>
@@ -137,7 +157,7 @@ const currentCharacters = characters.slice(indexOfFirstCharacter, indexOfLastCha
           {isSortedAZ ? 'Orden original' : 'Ordenar A-Z'}
         </button>
       </div>
- {/*--------------------------------------*/}
+      {/*--------------------------------------*/}
 
       <div className="characters">
         {/*combinación del nombre del personaje y el índice del personaje en la lista (index) 

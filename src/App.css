@@ -17,11 +17,31 @@
 .title {
   font-family: 'HarryPotter', sans-serif;
   font-size: 48px; /* Ajuste de tamaño */
+  font-stretch: expanded;
   text-align: center;
   margin-top: 20px;
   margin-bottom: 20px;
   color: #FFD700; 
 }
+
+/*-----Sweet Alert--------------------*/
+.loading {
+  font-family: 'HarryPotter', sans-serif;
+  color: #dfbc12; 
+  font-style: oblique;
+  font-size: 100px;
+  text-align: center;
+  margin-top: 300px;
+}
+
+.error {
+  color: red;
+  font-size: 24px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+
 /*----BOTONES--------------------------*/
 .search-container {
   display: flex;
