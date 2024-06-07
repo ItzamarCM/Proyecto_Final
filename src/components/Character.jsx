@@ -13,8 +13,7 @@ const Character = ({ character }) => {
 
   return (
     <div className="character">
-      <h3>{character.name}</h3>  {/* Nombre */}
-      <p>{character.house}</p>   {/* Casa */}
+      <h3><strong>{character.name}</strong></h3>  {/* Nombre */}
 
     {/* Mostrar icono de usuario generico cuando no haya imagen designada */}
       {character.image ? ( 
@@ -23,7 +22,7 @@ const Character = ({ character }) => {
         //TODO: <i className="bi bi-person-circle character-placeholder-icon"></i>
         <img src={placeholderImage} alt="placeholder" className="character-img" />
       )}
-
+      <p><strong>{character.house}</strong></p>   {/* Casa */}
       <p> <strong>BD:</strong> {character.dateOfBirth}</p>   {/* Año de nacimiento */}
       <p> <strong>Actor:</strong> {character.actor}</p>   {/* Actor */}
     </div>

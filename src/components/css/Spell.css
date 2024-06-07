@@ -1,9 +1,39 @@
-.spell-card {
-    border: 1px solid #ccc;
-    padding: 16px;
-    margin: 8px;
+/*----HECHIZOS----------------------------------*/
+.spells {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .spell {
+    background-color: #decca9; /* Fondo de las tarjetas */
+    border: 2px solid #444444; /* Borde de las tarjetas */
     border-radius: 8px;
-    background-color: #797777;
-    box-shadow: 0 2px 5px #393636;
-}
+    margin: 10px;
+    padding: 18px;
+    width: 250px;
+    text-align: center; /* Centrar texto */
+    box-shadow: 0 4px 8px #a95c14;
+  }
+  
+  .spell h3 {
+    font-family: 'HarryPotter','Lumos', sans-serif;
+    font-size: 270%;
+    color: #373737; /* Color rojo oscuro */
+    text-shadow: 0  2px  5px   #ffffff,
+                 0  3px  1px   #747474;
+    margin-bottom: 20px;
+  }
+  
+  .spell p {
+    font-family: 'Georgia', serif;
+    color: #302d2d;
+  }
+  
+  .spell img {
+    max-width: 85%;
+    border-radius: 50%;
+    border: 2px solid #444444;
+    margin-bottom: 20px;
+  }
   

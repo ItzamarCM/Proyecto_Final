@@ -1,21 +1,38 @@
-/* estilos específicos para el componente Character. */
+/*----PERSONAJES----------------------------------*/
+.characters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
 .character {
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  background-color: #decca9; /* Fondo de las tarjetas */
+  border: 2px solid #444444; /* Borde de las tarjetas */
+  border-radius: 8px;
   margin: 10px;
-  padding: 10px;
-  width: 150px;
-  text-align: center;
+  padding: 18px;
+  width: 250px;
+  height: 540px;
+  text-align: center; /* Centrar texto */
+  box-shadow: 0 4px 8px #a95c14;
 }
 
 .character img {
-  width: 100px;
-  height: 100px;
+  max-width: 85%;
   border-radius: 50%;
+  border: 2px solid #444444;
+  margin-bottom: 20px;
 }
 
-.character-placeholder-icon {
-  font-size: 6rem;
-  color: #dbb146;
+.character h3 {
+  font-family: 'HarryPotter','Lumos', sans-serif;
+  font-size: 270%;
+  color: #373737; /* Color rojo oscuro */
+  text-shadow: 0  2px  5px   #ffffff,
+               0  3px  1px   #747474;
+}
+
+.character p {
+  font-family: 'Georgia', serif;
+  color: #302d2d;
 }
