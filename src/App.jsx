@@ -1,7 +1,6 @@
 // utilizar el componente Character y obtener los datos de la API de Harry Potter.
-
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { fetchCharacters, fetchSpells } from './api/hpApi';
 import Character from './components/Character';
 import Spell from './components/Spell';
 import './App.css';
@@ -10,6 +9,7 @@ import Footer from './components/Footer';
 import CardCarousel from './components/Carousel'; // Importa el componente Carousel
 import Pagination from './components/Pagination'; // Importa el componente Pagination
 import Swal from 'sweetalert2'; // Importa SweetAlert2
+import { filterCharacters } from './utils/filterUtils';
 
 //TODO ------------------------------------------------------------------------------------------
 function App() { //useState : permite añadir el estado de React a un componente de función
@@ -18,11 +18,11 @@ function App() { //useState : permite añadir el estado de React a un componente
   const [searchTerm, setSearchTerm] = useState(localStorage.getItem('searchTerm') || ''); // Estado para el término de búsqueda
   
   //busqueda por casas --------------
-  const [selectedHouse, setSelectedHouse] = useState(localStorage.getItem('selectedHouse') || ''); // Búsqueda por casas
+  const [selectedHouse, setSelectedHouse] = useState(localStorage.getItem('selectedHouse') || '');
   const [showFilterMenu, setShowFilterMenu] = useState(false);
 
   //A-Z -------------
-  const [isSortedAZ, setIsSortedAZ] = useState(JSON.parse(localStorage.getItem('isSortedAZ')) || false); // Orden A-Z
+  const [isSortedAZ, setIsSortedAZ] = useState(JSON.parse(localStorage.getItem('isSortedAZ')) || false);
   
   //Paginación
   const [currentPage, setCurrentPage] = useState(JSON.parse(localStorage.getItem('currentPage')) || 1); // Página actual
@@ -41,12 +41,12 @@ function App() { //useState : permite añadir el estado de React a un componente
   //TODO ------------------------------------------------------------------------------------------
   //use Effect : indicando a React que el componente tiene que hacer algo después de renderizarse.
 
-  useEffect(() => { //Conexión con la API
-    axios.get('https://hp-api.onrender.com/api/characters')
-      .then(response => {
-        setCharacters(response.data);
-        setOriginalCharacters(response.data); // Guardar el orden original
-        setLoading(false); // Finalizar la carga
+  useEffect(() => {
+    fetchCharacters()
+      .then(data => {
+        setCharacters(data);
+        setOriginalCharacters(data);
+        setLoading(false);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -56,15 +56,15 @@ function App() { //useState : permite añadir el estado de React a un componente
           title: 'Oops...',
           text: 'Error al cargar los personajes. Por favor intenta más tarde.',
         });
-        setLoading(false); // Finalizar la carga
+        setLoading(false);
       });
-  }, []);
+  }, []);  
 
-  const fetchSpells = () => {
+  const handleFetchSpells = () => {
     setLoading(true);
-    axios.get('https://hp-api.onrender.com/api/spells')
-      .then(response => {
-        setSpells(response.data);
+    fetchSpells()
+      .then(data => {
+        setSpells(data);
         setLoading(false);
         setView('spells');
       })
@@ -78,6 +78,8 @@ function App() { //useState : permite añadir el estado de React a un componente
         setLoading(false);
       });
   };
+  
+//TODO LocalStorage ------------------------------------------------------------------------------------------
 
   useEffect(() => {
     // Guardar el estado en localStorage cuando cambie
@@ -92,24 +94,12 @@ function App() { //useState : permite añadir el estado de React a un componente
 const handleSearch = (e) => {
   const value = e.target.value.toLowerCase();
   setSearchTerm(value);
-  filterCharacters(value, selectedHouse);
+  filterCharacters(value, selectedHouse, originalCharacters, setCharacters);
 };
 
 const handleFilterByHouse = (house) => {
   setSelectedHouse(house);
-  filterCharacters(searchTerm, house);
-};
-
-const filterCharacters = (searchTerm, house) => {
-  let filtered = originalCharacters;
-  if (house) {
-    filtered = filtered.filter(character => character.house === house);
-  }
-  if (searchTerm) {
-    filtered = filtered.filter(character => character.name.toLowerCase().includes(searchTerm));
-  }
-  setCharacters(filtered);
-  setCurrentPage(1); // Reiniciar a la primera página cuando se filtra
+  filterCharacters(searchTerm, house, originalCharacters, setCharacters);
 };
 
 const handleSortAZ = () => {
@@ -156,7 +146,7 @@ const currentCharacters = characters.slice(indexOfFirstCharacter, indexOfLastCha
 
       <div className="header">
         <h1 className="title" onClick={() => setView('characters')}>PERSONAJES</h1> {/* Volver a personajes */}
-        <h1 className="title" onClick={fetchSpells}>HECHIZOS</h1> {/* Cambiar a hechizos */}
+        <h1 className="title" onClick={handleFetchSpells}>HECHIZOS</h1> {/* Cambiar a hechizos */}
       </div>
       {view === 'characters' && (
         <>
