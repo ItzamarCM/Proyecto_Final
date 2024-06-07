@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Character from './components/Character';
+import Spell from './components/Spell';
 import './App.css';
 import Banner from './components/Banner';
 import Footer from './components/Footer';
@@ -15,7 +16,7 @@ function App() { //useState : permite añadir el estado de React a un componente
   const [characters, setCharacters] = useState([]);
   const [originalCharacters, setOriginalCharacters] = useState([]); //Estado original
   const [searchTerm, setSearchTerm] = useState(localStorage.getItem('searchTerm') || ''); // Estado para el término de búsqueda
- 
+  
   //busqueda por casas --------------
   const [selectedHouse, setSelectedHouse] = useState(localStorage.getItem('selectedHouse') || ''); // Búsqueda por casas
   const [showFilterMenu, setShowFilterMenu] = useState(false);
@@ -31,8 +32,14 @@ function App() { //useState : permite añadir el estado de React a un componente
   const [loading, setLoading] = useState(true); // Estado de carga
   const [error, setError] = useState(null); // Estado de error
 
-//TODO ------------------------------------------------------------------------------------------
-//use Effect : indicando a React que el componente tiene que hacer algo después de renderizarse.
+  // Estado para la vista actual (personajes o hechizos)
+  const [view, setView] = useState('characters'); 
+
+  // Estado para los hechizos
+  const [spells, setSpells] = useState([]); 
+
+  //TODO ------------------------------------------------------------------------------------------
+  //use Effect : indicando a React que el componente tiene que hacer algo después de renderizarse.
 
   useEffect(() => { //Conexión con la API
     axios.get('https://hp-api.onrender.com/api/characters')
@@ -53,6 +60,25 @@ function App() { //useState : permite añadir el estado de React a un componente
       });
   }, []);
 
+  const fetchSpells = () => {
+    setLoading(true);
+    axios.get('https://hp-api.onrender.com/api/spells')
+      .then(response => {
+        setSpells(response.data);
+        setLoading(false);
+        setView('spells');
+      })
+      .catch(error => {
+        console.error('Error fetching spells:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Error al cargar los hechizos. Por favor intenta más tarde.',
+        });
+        setLoading(false);
+      });
+  };
+
   useEffect(() => {
     // Guardar el estado en localStorage cuando cambie
     localStorage.setItem('searchTerm', searchTerm);
@@ -66,7 +92,6 @@ function App() { //useState : permite añadir el estado de React a un componente
 const handleSearch = (e) => {
   const value = e.target.value.toLowerCase();
   setSearchTerm(value);
-
   filterCharacters(value, selectedHouse);
 };
 
@@ -77,15 +102,12 @@ const handleFilterByHouse = (house) => {
 
 const filterCharacters = (searchTerm, house) => {
   let filtered = originalCharacters;
-
   if (house) {
     filtered = filtered.filter(character => character.house === house);
   }
-
   if (searchTerm) {
     filtered = filtered.filter(character => character.name.toLowerCase().includes(searchTerm));
   }
-
   setCharacters(filtered);
   setCurrentPage(1); // Reiniciar a la primera página cuando se filtra
 };
@@ -122,6 +144,7 @@ const currentCharacters = characters.slice(indexOfFirstCharacter, indexOfLastCha
   if (error) {
     return <div className="error">{error}</div>;
   }
+
 //TODO ------------------------------------------------------------------------------------------
 
   return ( //Mandar a llamar los personajes dentro de la interfaz
@@ -131,8 +154,12 @@ const currentCharacters = characters.slice(indexOfFirstCharacter, indexOfLastCha
       {/* Agrega el componente CardCarousel */}
       <CardCarousel />
 
-      <h1 className="title">PERSONAJES</h1> {/* Texto añadido con estilo de Harry Potter */}
-
+      <div className="header">
+        <h1 className="title" onClick={() => setView('characters')}>PERSONAJES</h1> {/* Volver a personajes */}
+        <h1 className="title" onClick={fetchSpells}>HECHIZOS</h1> {/* Cambiar a hechizos */}
+      </div>
+      {view === 'characters' && (
+        <>
       {/*-------------------------------------------*/}
       <div className="search-container">
         <div className="dropdown">
@@ -174,6 +201,18 @@ const currentCharacters = characters.slice(indexOfFirstCharacter, indexOfLastCha
         totalItems={characters.length}
         onPageChange={setCurrentPage}
       />
+
+
+</>
+      )}
+      {view === 'spells' && (
+        <div className="spells">
+          {spells.map((spell, index) => (
+            <Spell key={index} spell={spell} />
+          ))}
+        </div>
+      )}
+
 
       <Footer />
     </div>

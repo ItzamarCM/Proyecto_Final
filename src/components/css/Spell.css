@@ -1,0 +1,9 @@
+.spell-card {
+    border: 1px solid #ccc;
+    padding: 16px;
+    margin: 8px;
+    border-radius: 8px;
+    background-color: #797777;
+    box-shadow: 0 2px 5px #393636;
+}
+  
