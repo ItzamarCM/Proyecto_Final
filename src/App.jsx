@@ -113,7 +113,7 @@ if (loading) {
   return ( //Mandar a llamar los personajes dentro de la interfaz
     <div className="App">
       <Banner />
-
+    <div className="body">
       {/* Agrega el componente CardCarousel */}
       <CardCarousel />
 
@@ -184,6 +184,8 @@ if (loading) {
           />
         </>
       )}
+
+      </div>      
       <Footer />
     </div>
   );

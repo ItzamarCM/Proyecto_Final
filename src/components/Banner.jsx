@@ -4,7 +4,7 @@ import './css/B-F.css';
 const Banner = () => {
   return (
     <header className="banner">
-      <img src="/banner2.jpg" alt="" />
+      <img src="/banner4.png" alt="" />
     </header>
   );
 };

@@ -32,7 +32,7 @@ const SearchSpells = ({
         value={searchTerm}
         onChange={handleSearch}
       />
-      <button className="reset-button" onClick={resetSearch}>
+      <button className="sort-button" onClick={resetSearch}>
         Reiniciar
       </button>
     </div>

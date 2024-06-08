@@ -3,10 +3,12 @@
   font-family: 'Times New Roman', Times, serif;
   background-color: #181818; /* Fondo oscuro */
   color: #f5f5f5; /* Texto claro */
-  padding: 20px;
   position: relative; /*para posicionar el botón de cargar más */
 }
 
+.body {
+  padding: 20px;
+}
 /*----FUENTE-------------------------------------------------*/
 
 @font-face {
@@ -58,6 +60,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+  font-size: 20px;
 }
 
 .filter-button, .sort-button {
@@ -91,11 +94,13 @@
 
 .dropdown-menu {
   z-index: 1050; /* para superponer el menú sobre el carousel */
+  font-size: 20px;
 }
 
 .btn-secondary {
   background-color: #343a40;
   border-color: #343a40;
+  font-size: 20px;
 }
 
 .btn-secondary:hover { /*botón filtros*/
@@ -111,26 +116,31 @@
 .gryffindor-item:hover {
   background-color: #ae0001;
   color: white;
+  font-size: 20px;
 }
 
 .slytherin-item:hover {
   background-color: #2a623d;
   color: white;
+  font-size: 20px;
 }
 
 .hufflepuff-item:hover {
   background-color: #deab29;
   color: white;
+  font-size: 20px;
 }
 
 .ravenclaw-item:hover {
   background-color: #222f5b;
   color: white;
+  font-size: 20px;
 }
 
 .reset-item:hover {
   background-color: grey;
   color: white;
+  font-size: 20px;
 }
 
 

@@ -1,9 +1,8 @@
 /*---------------- BANNER Y FOOTER ------------------*/
 
 .banner {
-    background-color: #444;
-   /*padding: 20px;*/
     margin-bottom: 20px;
+    padding-top: 40px;
   }
   
 .banner h1 {
@@ -11,8 +10,8 @@
   }
   
 .banner img {
-    width: 1480px;
-    height: 500px;
+    width: 80%; /*98%*/
+    height: 50%; /*50%*/
   }
 
 .footer {
