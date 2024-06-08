@@ -11,14 +11,15 @@
   border-radius: 8px;
   margin: 10px;
   padding: 18px;
-  width: 250px;
-  height: 540px;
+  width: 220px;
+  height: 480px;
   text-align: center; /* Centrar texto */
   box-shadow: 0 4px 8px #a95c14;
 }
 
 .character img {
-  max-width: 85%;
+  width: 85%; /*ancho*/
+  height: 40%; /*alto*/
   border-radius: 50%;
   border: 2px solid #444444;
   margin-bottom: 20px;

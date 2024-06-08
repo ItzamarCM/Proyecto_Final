@@ -9,7 +9,7 @@ import Footer from './components/Footer';
 import CardCarousel from './components/Carousel'; // Importa el componente Carousel
 import Pagination from './components/Pagination'; // Importa el componente Pagination
 import Swal from 'sweetalert2'; // Importa SweetAlert2
-import { filterCharacters } from './utils/filterUtils';
+import Search from './components/Search';
 
 //TODO ------------------------------------------------------------------------------------------
 function App() { //useState : permite añadir el estado de React a un componente de función
@@ -19,14 +19,13 @@ function App() { //useState : permite añadir el estado de React a un componente
   
   //busqueda por casas --------------
   const [selectedHouse, setSelectedHouse] = useState(localStorage.getItem('selectedHouse') || '');
-  const [showFilterMenu, setShowFilterMenu] = useState(false);
-
+  
   //A-Z -------------
   const [isSortedAZ, setIsSortedAZ] = useState(JSON.parse(localStorage.getItem('isSortedAZ')) || false);
   
   //Paginación
   const [currentPage, setCurrentPage] = useState(JSON.parse(localStorage.getItem('currentPage')) || 1); // Página actual
-  const itemsPerPage = 30; // Elementos por página
+  const itemsPerPage = 24; // Elementos por página
 
   //SweetAlert
   const [loading, setLoading] = useState(true); // Estado de carga
@@ -36,7 +35,7 @@ function App() { //useState : permite añadir el estado de React a un componente
   const [view, setView] = useState('characters'); 
 
   // Estado para los hechizos
-  const [spells, setSpells] = useState([]); 
+  const [spells, setSpells] = useState([]);  
 
   //TODO ------------------------------------------------------------------------------------------
   //use Effect : indicando a React que el componente tiene que hacer algo después de renderizarse.
@@ -90,44 +89,12 @@ function App() { //useState : permite añadir el estado de React a un componente
   }, [searchTerm, selectedHouse, isSortedAZ, currentPage]);
 
 //TODO ------------------------------------------------------------------------------------------
-// Filtrar los personajes según el término de búsqueda --------------------------------
-const handleSearch = (e) => {
-  const value = e.target.value.toLowerCase();
-  setSearchTerm(value);
-  filterCharacters(value, selectedHouse, originalCharacters, setCharacters);
-};
-
-const handleFilterByHouse = (house) => {
-  setSelectedHouse(house);
-  filterCharacters(searchTerm, house, originalCharacters, setCharacters);
-};
-
-const handleSortAZ = () => {
-  if (isSortedAZ) {
-    setCharacters(originalCharacters);
-  } else {
-    const sortedCharacters = [...characters].sort((a, b) => a.name.localeCompare(b.name));
-    setCharacters(sortedCharacters);
-  }
-  setIsSortedAZ(!isSortedAZ);
-};
-
-const resetFiltersAndSort = () => {
-  setCharacters(originalCharacters);
-  setSearchTerm('');
-  setSelectedHouse('');
-  setIsSortedAZ(false);
-  setCurrentPage(1); // Va a la primera página cuando se reinicia
-};
-
-//TODO ------------------------------------------------------------------------------------------
-
 // Calcular los personajes a mostrar en la página actual
 const indexOfLastCharacter = currentPage * itemsPerPage;
 const indexOfFirstCharacter = indexOfLastCharacter - itemsPerPage;
 const currentCharacters = characters.slice(indexOfFirstCharacter, indexOfLastCharacter);
 
-  if (loading) {
+if (loading) {
     return <div className="loading"><strong>Cargando...</strong></div>;
   }
 
@@ -144,36 +111,24 @@ const currentCharacters = characters.slice(indexOfFirstCharacter, indexOfLastCha
       {/* Agrega el componente CardCarousel */}
       <CardCarousel />
 
-      <div className="header">
-        <h1 className="title" onClick={() => setView('characters')}>PERSONAJES</h1> {/* Volver a personajes */}
-        <h1 className="title" onClick={handleFetchSpells}>HECHIZOS</h1> {/* Cambiar a hechizos */}
+      <div className="title-container">
+        <p className="title" onClick={() => setView('characters')}>PERSONAJES</p> {/* Volver a personajes */}
+        <p className="title" onClick={handleFetchSpells}>HECHIZOS</p> {/* Cambiar a hechizos */}
       </div>
       {view === 'characters' && (
         <>
       {/*-------------------------------------------*/}
-      <div className="search-container">
-        <div className="dropdown">
-          <button className="btn btn-secondary dropdown-toggle" type="button" id="filterMenuButton" aria-haspopup="true" aria-expanded="false" onClick={() => setShowFilterMenu(!showFilterMenu)}>
-            Filtros
-          </button>
-          <div className={`dropdown-menu ${showFilterMenu ? 'show' : ''}`} aria-labelledby="filterMenuButton">
-            <button className="dropdown-item gryffindor-item" onClick={() => handleFilterByHouse('Gryffindor')}>Gryffindor</button>
-            <button className="dropdown-item slytherin-item" onClick={() => handleFilterByHouse('Slytherin')}>Slytherin</button>
-            <button className="dropdown-item hufflepuff-item" onClick={() => handleFilterByHouse('Hufflepuff')}>Hufflepuff</button>
-            <button className="dropdown-item ravenclaw-item" onClick={() => handleFilterByHouse('Ravenclaw')}>Ravenclaw</button>
-            <button className="dropdown-item reset-item" onClick={() => resetFiltersAndSort()}>Mostrar todos</button>
-          </div>
-        </div>
-        <input 
-          type="text" 
-          placeholder="Buscar personaje..." 
-          value={searchTerm}
-          onChange={handleSearch}
-        />
-        <button className="sort-button" onClick={handleSortAZ}>
-          {isSortedAZ ? 'Orden original' : 'Ordenar A-Z'}
-        </button>
-      </div>
+      <Search 
+            originalCharacters={originalCharacters} 
+            setCharacters={setCharacters} 
+            selectedHouse={selectedHouse} 
+            setSelectedHouse={setSelectedHouse} 
+            searchTerm={searchTerm} 
+            setSearchTerm={setSearchTerm} 
+            isSortedAZ={isSortedAZ} 
+            setIsSortedAZ={setIsSortedAZ}
+            setCurrentPage={setCurrentPage}
+          />
       {/*--------------------------------------*/}
 
       <div className="characters">
@@ -191,9 +146,7 @@ const currentCharacters = characters.slice(indexOfFirstCharacter, indexOfLastCha
         totalItems={characters.length}
         onPageChange={setCurrentPage}
       />
-
-
-</>
+  </>
       )}
       {view === 'spells' && (
         <div className="spells">

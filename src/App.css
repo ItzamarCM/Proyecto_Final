@@ -14,14 +14,24 @@
   src: url('./fonts/HARRYP__.ttf') format('truetype');
 }
 
+.title-container {
+  position: relative;
+  z-index: 1;
+}
+
 .title {
   font-family: 'HarryPotter', sans-serif;
-  font-size: 48px; /* Ajuste de tamaño */
+  font-size: 48px;
   font-stretch: expanded;
   text-align: center;
   margin-top: 20px;
   margin-bottom: 20px;
-  color: #FFD700; 
+  color: #FFD700;
+}
+
+.title:hover {
+  color: #d7d7d7;
+  font-size: 50px;
 }
 
 /*-----Sweet Alert--------------------*/
@@ -47,7 +57,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px;
+  margin-top: 20px;
 }
 
 .filter-button, .sort-button {
