@@ -1,4 +1,6 @@
 // utils/filterUtils.js
+
+// FILTRAR PERSONAJES ---------------------------
 export const filterCharacters = (searchTerm, selectedHouse, originalCharacters) => {
   let filteredCharacters = originalCharacters;
 
@@ -15,4 +17,16 @@ export const filterCharacters = (searchTerm, selectedHouse, originalCharacters) 
   }
 
   return filteredCharacters;
+};
+
+// FILTRAR HECHIZOS --------------------------------
+
+export const filterSpells = (searchTerm, originalSpells) => {
+  if (!searchTerm) {
+    return originalSpells;
+  }
+  
+  return originalSpells.filter(spell =>
+    spell.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 };

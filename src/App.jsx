@@ -9,7 +9,8 @@ import Footer from './components/Footer';
 import CardCarousel from './components/Carousel'; // Importa el componente Carousel
 import Pagination from './components/Pagination'; // Importa el componente Pagination
 import Swal from 'sweetalert2'; // Importa SweetAlert2
-import Search from './components/Search';
+import Search from './components/Search-C';
+import SearchSpells from './components/Search-S';
 
 //TODO ------------------------------------------------------------------------------------------
 function App() { //useState : permite añadir el estado de React a un componente de función
@@ -36,6 +37,8 @@ function App() { //useState : permite añadir el estado de React a un componente
 
   // Estado para los hechizos
   const [spells, setSpells] = useState([]);  
+  const [originalSpells, setOriginalSpells] = useState([]);
+  const [searchTermSpells, setSearchTermSpells] = useState(localStorage.getItem('searchTermSpells') || '');
 
   //TODO ------------------------------------------------------------------------------------------
   //use Effect : indicando a React que el componente tiene que hacer algo después de renderizarse.
@@ -64,6 +67,7 @@ function App() { //useState : permite añadir el estado de React a un componente
     fetchSpells()
       .then(data => {
         setSpells(data);
+        setOriginalSpells(data);
         setLoading(false);
         setView('spells');
       })
@@ -86,13 +90,15 @@ function App() { //useState : permite añadir el estado de React a un componente
     localStorage.setItem('selectedHouse', selectedHouse);
     localStorage.setItem('isSortedAZ', JSON.stringify(isSortedAZ));
     localStorage.setItem('currentPage', JSON.stringify(currentPage));
-  }, [searchTerm, selectedHouse, isSortedAZ, currentPage]);
+    localStorage.setItem('searchTermSpells', searchTermSpells);
+  }, [searchTerm, selectedHouse, isSortedAZ, currentPage, searchTermSpells]);
 
 //TODO ------------------------------------------------------------------------------------------
 // Calcular los personajes a mostrar en la página actual
 const indexOfLastCharacter = currentPage * itemsPerPage;
 const indexOfFirstCharacter = indexOfLastCharacter - itemsPerPage;
 const currentCharacters = characters.slice(indexOfFirstCharacter, indexOfLastCharacter);
+const currentSpells = spells.slice(indexOfFirstCharacter, indexOfLastCharacter);
 
 if (loading) {
     return <div className="loading"><strong>Cargando...</strong></div>;
@@ -115,9 +121,11 @@ if (loading) {
         <p className="title" onClick={() => setView('characters')}>PERSONAJES</p> {/* Volver a personajes */}
         <p className="title" onClick={handleFetchSpells}>HECHIZOS</p> {/* Cambiar a hechizos */}
       </div>
+      
+{/* PERSONAJES ------------------------------------------------------------------- */}
+      
       {view === 'characters' && (
         <>
-      {/*-------------------------------------------*/}
       <Search 
             originalCharacters={originalCharacters} 
             setCharacters={setCharacters} 
@@ -148,15 +156,34 @@ if (loading) {
       />
   </>
       )}
+
+{/* HECHIZOS ---------------------------------------------- */}
+
       {view === 'spells' && (
-        <div className="spells">
-          {spells.map((spell, index) => (
-            <Spell key={index} spell={spell} />
-          ))}
-        </div>
+        <>
+          <SearchSpells 
+            originalSpells={originalSpells} 
+            setSpells={setSpells} 
+            searchTerm={searchTermSpells} 
+            setSearchTerm={setSearchTermSpells} 
+            setCurrentPage={setCurrentPage}
+          />
+
+          {/*--------------------------------------*/}
+
+          <div className="spells">
+            {currentSpells.map((spell, index) => (
+              <Spell key={`${spell.name}-${index}`} spell={spell} />
+            ))}
+          </div>
+          <Pagination
+            currentPage={currentPage}
+            itemsPerPage={itemsPerPage}
+            totalItems={spells.length}
+            onPageChange={setCurrentPage}
+          />
+        </>
       )}
-
-
       <Footer />
     </div>
   );
