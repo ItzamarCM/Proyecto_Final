@@ -1,7 +1,7 @@
 import React from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import './css/Carousel.css';
+import '../assets/css/Carousel.css';
 
 // Importa las imágenes
 import L1 from '../images/L1.jpg';

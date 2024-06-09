@@ -1,0 +1,29 @@
+/* Title.css */
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .title-container .title {
+    font-family: 'HarryPotter', sans-serif;
+    flex: 1;
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #FFD700;
+  }
+
+  .title-container .title:hover {
+    color: #d7d7d7;
+    font-size: 40px;
+  }
+  
+  .title-container .middle-image {
+    width: 230px;
+    height: 250px;
+    margin: 0 20px;
+  }
+  

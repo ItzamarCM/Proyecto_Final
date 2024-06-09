@@ -26,12 +26,16 @@ const SearchSpells = ({
 
   return (
     <div className="search-container">
-      <input
-        type="text"
-        placeholder="Buscar hechizo..."
-        value={searchTerm}
-        onChange={handleSearch}
-      />
+     <div className="search-input-container">
+        <i className="bi bi-feather search-icon"></i>
+        <input
+          type="text"
+          placeholder="Buscar hechizo..."
+          value={searchTerm}
+          onChange={handleSearch}
+          className="search-input"
+        />
+      </div>
       <button className="sort-button" onClick={resetSearch}>
         Reiniciar
       </button>

@@ -1,7 +1,7 @@
 //definir el componente que mostrará los datos de cada personaje.
 
 import React from 'react';
-import './css/Character.css';
+import '../assets/css/Character.css';
 import PropTypes from 'prop-types';
 
 const Character = ({ character }) => {

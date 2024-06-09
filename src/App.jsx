@@ -11,6 +11,8 @@ import Pagination from './components/Pagination'; // Importa el componente Pagin
 import Swal from 'sweetalert2'; // Importa SweetAlert2
 import Search from './components/Search-C';
 import SearchSpells from './components/Search-S';
+import Scroll from './components/Scroll';
+import Title from './components/Title';
 
 //TODO ------------------------------------------------------------------------------------------
 function App() { //useState : permite añadir el estado de React a un componente de función
@@ -26,7 +28,7 @@ function App() { //useState : permite añadir el estado de React a un componente
   
   //Paginación
   const [currentPage, setCurrentPage] = useState(JSON.parse(localStorage.getItem('currentPage')) || 1); // Página actual
-  const itemsPerPage = 24; // Elementos por página
+  const itemsPerPage = 30; // Elementos por página
 
   //SweetAlert
   const [loading, setLoading] = useState(true); // Estado de carga
@@ -117,10 +119,7 @@ if (loading) {
       {/* Agrega el componente CardCarousel */}
       <CardCarousel />
 
-      <div className="title-container">
-        <p className="title" onClick={() => setView('characters')}>PERSONAJES</p> {/* Volver a personajes */}
-        <p className="title" onClick={handleFetchSpells}>HECHIZOS</p> {/* Cambiar a hechizos */}
-      </div>
+      <Title selectedHouse={selectedHouse} setView={setView} handleFetchSpells={handleFetchSpells} />
       
 {/* PERSONAJES ------------------------------------------------------------------- */}
       
@@ -184,7 +183,7 @@ if (loading) {
           />
         </>
       )}
-
+      <Scroll />
       </div>      
       <Footer />
     </div>

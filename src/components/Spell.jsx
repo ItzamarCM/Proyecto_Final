@@ -1,5 +1,5 @@
 import React from 'react';
-import './css/Spell.css';
+import '../assets/css/Spell.css';
 
 const Spell = ({ spell }) => {
   return (

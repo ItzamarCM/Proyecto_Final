@@ -1,4 +1,4 @@
-// components/Search.jsx
+// components/Search-C.jsx
 import React, { useState } from 'react';
 import { filterCharacters } from '../utils/filterUtils';
 
@@ -62,12 +62,16 @@ const Search = ({
           <button className="dropdown-item reset-item" onClick={() => resetFiltersAndSort()}>Mostrar todos</button>
         </div>
       </div>
-      <input
-        type="text"
-        placeholder="Buscar personaje..."
-        value={searchTerm}
-        onChange={handleSearch}
-      />
+      <div className="search-input-container">
+        <i className="bi bi-feather search-icon"></i>
+        <input
+          type="text"
+          placeholder="Buscar personaje..."
+          value={searchTerm}
+          onChange={handleSearch}
+          className="search-input"
+        />
+      </div>
       <button className="sort-button" onClick={handleSortAZ}>
         {isSortedAZ ? 'Orden original' : 'Ordenar A-Z'}
       </button>
