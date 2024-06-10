@@ -10,12 +10,12 @@
   }
   
   .page-link {
-    color: #343a40;
+    color: #f5c518;
   }
   
   .page-link:hover {
-    background-color: #f7c309;
-    border-color: #ecc505;
-    color: #2b2b2b;
+    background-color: #1a1a1a;
+    border-color: #f5c518;
+    color: #ffffff;
   }
   

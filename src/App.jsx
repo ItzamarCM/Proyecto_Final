@@ -102,13 +102,6 @@ const indexOfFirstCharacter = indexOfLastCharacter - itemsPerPage;
 const currentCharacters = characters.slice(indexOfFirstCharacter, indexOfLastCharacter);
 const currentSpells = spells.slice(indexOfFirstCharacter, indexOfLastCharacter);
 
-if (loading) {
-    return <div className="loading"><strong>Cargando...</strong></div>;
-  }
-
-  if (error) {
-    return <div className="error">{error}</div>;
-  }
 
 //TODO ------------------------------------------------------------------------------------------
 
@@ -119,11 +112,12 @@ if (loading) {
       {/* Agrega el componente CardCarousel */}
       <CardCarousel />
 
-      <Title selectedHouse={selectedHouse} setView={setView} handleFetchSpells={handleFetchSpells} />
+      <Title selectedHouse={selectedHouse} setView={setView} handleFetchSpells={handleFetchSpells} view={view} />
       
+      {loading && <div className="loading">Cargando...</div>}
 {/* PERSONAJES ------------------------------------------------------------------- */}
       
-      {view === 'characters' && (
+      {!loading && view === 'characters' && (
         <>
       <Search 
             originalCharacters={originalCharacters} 
@@ -158,7 +152,7 @@ if (loading) {
 
 {/* HECHIZOS ---------------------------------------------- */}
 
-      {view === 'spells' && (
+      {!loading && view === 'spells' && (
         <>
           <SearchSpells 
             originalSpells={originalSpells} 

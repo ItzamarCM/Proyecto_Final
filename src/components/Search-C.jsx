@@ -62,8 +62,6 @@ const Search = ({
           <button className="dropdown-item reset-item" onClick={() => resetFiltersAndSort()}>Mostrar todos</button>
         </div>
       </div>
-      <div className="search-input-container">
-        <i className="bi bi-feather search-icon"></i>
         <input
           type="text"
           placeholder="Buscar personaje..."
@@ -71,7 +69,6 @@ const Search = ({
           onChange={handleSearch}
           className="search-input"
         />
-      </div>
       <button className="sort-button" onClick={handleSortAZ}>
         {isSortedAZ ? 'Orden original' : 'Ordenar A-Z'}
       </button>

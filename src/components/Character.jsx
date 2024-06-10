@@ -13,15 +13,15 @@ const Character = ({ character }) => {
 
   return (
     <div className="character">
-      <h3><strong>{character.name}</strong></h3>  {/* Nombre */}
-
-    {/* Mostrar icono de usuario generico cuando no haya imagen designada */}
+      {/* Mostrar icono de usuario generico cuando no haya imagen designada */}
       {character.image ? ( 
         <img src={character.image} alt={character.name} className="character-img" />
       ) : (
-        //TODO: <i className="bi bi-person-circle character-placeholder-icon"></i>
         <img src={placeholderImage} alt="placeholder" className="character-img" />
       )}
+      
+      <h3><strong>{character.name}</strong></h3>  {/* Nombre */}
+
       <p><strong>{character.house}</strong></p>   {/* Casa */}
       <p> <strong>BD:</strong> {character.dateOfBirth}</p>   {/* Año de nacimiento */}
       <p> <strong>Actor:</strong> {character.actor}</p>   {/* Actor */}

@@ -10,7 +10,7 @@ const Scroll = () => {
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
 
-    if (scrollTop + windowHeight >= documentHeight - 350) { //altura a la que aparece 0=final
+    if (scrollTop + windowHeight >= documentHeight - 400) { //altura a la que aparece 0=final
       setIsVisible(true);
     } else {
       setIsVisible(false);
@@ -18,7 +18,7 @@ const Scroll = () => {
   };
 
   const scrollToTop = () => {
-    const searchElement = document.querySelector('.search-container'); // a donde llevará
+    const searchElement = document.querySelector('.title-container'); // a donde llevará
     if (searchElement) {
       searchElement.scrollIntoView({ behavior: 'smooth' });
     }

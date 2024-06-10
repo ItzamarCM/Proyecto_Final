@@ -3,27 +3,43 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 20px 0;
+    margin: 60px 50px; /*arriba/abajo - laterales*/
   }
   
   .title-container .title {
-    font-family: 'HarryPotter', sans-serif;
+    font-family: 'Titulo', sans-serif;
     flex: 1;
     text-align: center;
-    font-size: 50px;
+    font-size: 55px;
     font-weight: bold;
     cursor: pointer;
-    color: #FFD700;
+    color: #e1b845;
+    position: relative;
+    display: inline-block;
+    transition: font-size 0.15s ease;
   }
 
   .title-container .title:hover {
     color: #d7d7d7;
-    font-size: 40px;
+    font-size: 52px;
   }
   
   .title-container .middle-image {
-    width: 230px;
-    height: 250px;
+    width: 180px;
+    height: 200px;
     margin: 0 20px;
   }
   
+  .title-container .title.active::after {
+    content: '';
+    display: block;
+    width: 100%; /* Ancho total del contenedor */
+    max-width: 270px; /* Máximo ancho de la línea */
+    height: 3px;
+    background-color: #dfbc12; /* Ajusta el color según tus necesidades */
+    margin-top: 10px; /* Ajusta la distancia desde el texto */
+    position: absolute;
+    bottom: -5px; /* distancia del titulo*/
+    left: 50%; /* centrar */
+    transform: translateX(-50%); /* Ajustar para centrar */
+  }

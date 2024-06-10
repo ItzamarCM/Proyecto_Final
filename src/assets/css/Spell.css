@@ -6,28 +6,29 @@
   }
   
   .spell {
-    background-color: #decca9; /* Fondo de las tarjetas */
-    border: 2px solid #444444; /* Borde de las tarjetas */
+    background-color: #0000008f; /* Fondo de las tarjetas */
+    border: 2px solid #ecbf778d;  /* Borde de las tarjetas */
     border-radius: 8px;
     margin: 10px;
     padding: 18px;
     width: 250px;
     text-align: center; /* Centrar texto */
-    box-shadow: 0 4px 8px #a95c14;
+    box-shadow: 0 4px 8px #000000;
   }
   
   .spell h3 {
     font-family: 'HarryPotter','Lumos', sans-serif;
-    font-size: 270%;
-    color: #373737; /* Color rojo oscuro */
-    text-shadow: 0  2px  5px   #ffffff,
+    font-size: 250%;
+    color: #e1b845;
+    letter-spacing: 1px;
+    text-shadow: 0  2px  5px   #000000,
                  0  3px  1px   #747474;
     margin-bottom: 20px;
   }
   
   .spell p {
-    font-family: 'Georgia', serif;
-    color: #302d2d;
+    font-family: 'Cuerpo', serif;
+    color: #e1e1e1;
   }
   
   .spell img {
