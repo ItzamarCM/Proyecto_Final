@@ -3,12 +3,12 @@
   font-family: 'Cuerpo';
   background: linear-gradient(#0b0914, #312b56, #3A2C49); /* Fondo oscuro */
   color: #f5f5f5; /* Texto claro */
-  position: relative; /*para posicionar el botón de cargar más */
+  position: relative;
+  cursor: url('/v4.png'), auto;
 }
 
 .body {
   padding: 20px;
-  cursor: url('/v4.png'), auto;
 }
 /*----FUENTE-------------------------------------------------*/
 

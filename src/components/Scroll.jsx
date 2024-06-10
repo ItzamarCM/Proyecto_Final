@@ -10,7 +10,7 @@ const Scroll = () => {
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
 
-    if (scrollTop + windowHeight >= documentHeight - 400) { //altura a la que aparece 0=final
+    if (scrollTop + windowHeight >= documentHeight - 500) { //altura a la que aparece 0=final
       setIsVisible(true);
     } else {
       setIsVisible(false);

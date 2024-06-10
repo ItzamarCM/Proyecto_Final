@@ -7,8 +7,6 @@ import PropTypes from 'prop-types';
 const Character = ({ character }) => {
   const placeholderImage = '/no-imagen-d.png'; // Ruta de la imagen en la carpeta public
 
-//TODO: function Character({ character }) {
-
 // acá se especifica que datos se van a mostrar y en que orden
 
   return (
